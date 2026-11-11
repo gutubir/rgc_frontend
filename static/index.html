@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Academia RGC Training</title>
+<meta name="description" content="Academia RGC Training em Palhoça (SC): musculação, aulas coletivas, personal trainer e atendimento 24h pelo chat.">
+<meta name="theme-color" content="#101820">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -11,146 +14,190 @@
 </head>
 <body>
 
+<a class="skip" href="#inicio">Pular para o conteúdo</a>
+
 <header>
  <div class="wrap">
   <a class="logo" href="#inicio">RGC<span>.</span>TRAINING</a>
-  <nav>
+  <nav id="nav" aria-label="Principal">
    <a href="#horarios">Horários</a><a href="#planos">Planos</a><a href="#modalidades">Modalidades</a>
    <a href="#diferenciais">Diferenciais</a><a href="#contato">Contato</a>
+   <button type="button" class="btn nav-cta" data-open-chat>Falar no chat</button>
   </nav>
+  <button type="button" id="burger" aria-controls="nav" aria-expanded="false" aria-label="Abrir menu">
+   <span></span><span></span><span></span>
+  </button>
  </div>
 </header>
 
 <main id="inicio">
  <div class="hero">
   <div class="wrap">
-   <div>
+   <div class="hero-copy">
+    <p class="eyebrow">Palhoça · SC</p>
     <h1>Treine no seu <em>ritmo.</em></h1>
-    <p>Musculação, aulas coletivas e acompanhamento de verdade, perto de você. Conheça a RGC Training e faça sua matrícula.</p>
-    <a class="btn main" href="#planos">Ver planos</a>
-    <a class="btn ghost" href="#contato">Falar com a gente</a>
+    <p class="hero-text">Musculação, aulas coletivas e acompanhamento de verdade, perto de você. Conheça a RGC Training e faça sua matrícula.</p>
+    <div class="cta">
+     <a class="btn main" href="#planos">Ver planos</a>
+     <button type="button" class="btn ghost" data-open-chat>Tirar dúvidas no chat</button>
+    </div>
+    <ul class="stats" aria-label="Resumo">
+     <li><b>6</b><span>modalidades</span></li>
+     <li><b>3</b><span>planos</span></li>
+     <li><b>24h</b><span>chat de atendimento</span></li>
+    </ul>
    </div>
-   <div class="today" id="today">
+   <div class="today" id="today" aria-live="polite">
     <small>Agora na academia</small>
     <div class="status"><span class="dot"></span><span id="st">Verificando…</span></div>
     <p id="st2"></p>
+    <p class="today-line" id="st3"></p>
    </div>
   </div>
  </div>
 
- <section id="horarios" style="padding-top:0">
-  <div class="wrap">
+ <section id="horarios" class="tight">
+  <div class="wrap reveal">
+   <p class="kicker">01 · Horários</p>
    <h2>Horário de funcionamento</h2>
    <p class="lead">Treine antes ou depois do trabalho, de segunda a sábado.</p>
-   <div class="hours" id="hours">
-    <div data-d="1,2,3,4,5"><h3>Segunda a sexta</h3><b>06h00 – 22h00</b></div>
-    <div data-d="6"><h3>Sábado</h3><b>08h00 – 14h00</b></div>
-    <div data-d="0"><h3>Domingo e feriados</h3><b>Fechado</b></div>
-   </div>
+   <div class="hours" id="hours"></div>
   </div>
  </section>
 
- <section id="planos" style="padding-top:20px">
-  <div class="wrap">
+ <section id="planos" class="tight">
+  <div class="wrap reveal">
+   <p class="kicker">02 · Planos</p>
    <h2>Planos e matrícula</h2>
    <p class="lead">Todos os planos incluem musculação e aulas coletivas. Quanto maior o plano, menor a mensalidade.</p>
    <div class="plans">
-    <div class="plan"><h3>Mensal</h3><div class="price">R$ 129<small>/mês</small></div><p>Sem fidelidade.</p>
-     <ul><li>Musculação livre</li><li>Aulas coletivas</li><li>Avaliação física inicial</li></ul></div>
-    <div class="plan best"><h3>Trimestral</h3><div class="price">R$ 109<small>/mês</small></div><p>O mais escolhido.</p>
-     <ul><li>Tudo do plano Mensal</li><li>1 reavaliação física</li><li>Traga um amigo 2x por mês</li></ul></div>
-    <div class="plan"><h3>Anual</h3><div class="price">R$ 89<small>/mês</small></div><p>Menor preço por mês.</p>
-     <ul><li>Tudo do plano Trimestral</li><li>Matrícula grátis</li><li>Melhor custo-benefício</li></ul></div>
+    <div class="plan">
+     <h3>Mensal</h3><div class="price">R$ 129<small>/mês</small></div><p>Sem fidelidade.</p>
+     <ul><li>Musculação livre</li><li>Aulas coletivas</li><li>Avaliação física inicial</li></ul>
+     <button type="button" class="btn plan-cta" data-ask="Quero saber mais sobre o plano Mensal">Quero este plano</button>
+    </div>
+    <div class="plan best">
+     <span class="ribbon">Mais escolhido</span>
+     <h3>Trimestral</h3><div class="price">R$ 109<small>/mês</small></div><p>O equilíbrio entre preço e flexibilidade.</p>
+     <ul><li>Tudo do plano Mensal</li><li>1 reavaliação física</li><li>Traga um amigo 2x por mês</li></ul>
+     <button type="button" class="btn plan-cta" data-ask="Quero saber mais sobre o plano Trimestral">Quero este plano</button>
+    </div>
+    <div class="plan">
+     <h3>Anual</h3><div class="price">R$ 89<small>/mês</small></div><p>Menor preço por mês.</p>
+     <ul><li>Tudo do plano Trimestral</li><li>Matrícula grátis</li><li>Melhor custo-benefício</li></ul>
+     <button type="button" class="btn plan-cta" data-ask="Quero saber mais sobre o plano Anual">Quero este plano</button>
+    </div>
    </div>
    <p class="note">Matrícula: R$ 59 nos planos Mensal e Trimestral.</p>
   </div>
  </section>
 
- <section id="modalidades" style="padding-top:20px">
-  <div class="wrap">
+ <section id="modalidades" class="tight">
+  <div class="wrap reveal">
+   <p class="kicker">03 · Aulas</p>
    <h2>Aulas e modalidades</h2>
    <p class="lead">Seis opções para quem quer suar, aprender uma luta, relaxar ou treinar em família. Todas as aulas estão incluídas no plano.</p>
    <div class="mods">
     <article class="mod">
-     <div class="mod-top"><h3>RGC Bike</h3><span class="dur">45 min</span></div>
+     <div class="mod-top"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-8h5l3 8M10 8H8M13 12H8"/></svg></span><span class="dur">45 min</span></div>
+     <h3>RGC Bike</h3>
      <p class="goal"><b>Objetivo:</b> condicionamento cardiovascular e queima calórica.</p>
      <ul><li>Melhora o fôlego e a resistência</li><li>Alto gasto de calorias</li><li>Baixo impacto nas articulações</li></ul>
     </article>
     <article class="mod">
-     <div class="mod-top"><h3>FitDance</h3><span class="dur">50 min</span></div>
+     <div class="mod-top"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="16" r="2"/></svg></span><span class="dur">50 min</span></div>
+     <h3>FitDance</h3>
      <p class="goal"><b>Objetivo:</b> emagrecimento com diversão.</p>
      <ul><li>Trabalha o corpo todo ao ritmo da música</li><li>Melhora a coordenação motora</li><li>Ajuda a aliviar o estresse</li></ul>
     </article>
     <article class="mod">
-     <div class="mod-top"><h3>RGC Kids</h3><span class="dur">40 min</span></div>
+     <div class="mod-top"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9.5h.01M15 9.5h.01"/></svg></span><span class="dur">40 min</span></div>
+     <h3>RGC Kids</h3>
      <p class="goal"><b>Objetivo:</b> fortalecimento muscular e hábito de movimento.</p>
      <ul><li>Fortalece músculos e ossos</li><li>Desenvolve postura e equilíbrio</li><li>Estimula disciplina e socialização</li></ul>
     </article>
     <article class="mod">
-     <div class="mod-top"><h3>Boxe</h3><span class="dur">60 min</span></div>
+     <div class="mod-top"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 11V7a3 3 0 0 1 3-3h4a4 4 0 0 1 4 4v6a6 6 0 0 1-6 6h-1a4 4 0 0 1-4-4z"/><path d="M7 14h6"/></svg></span><span class="dur">60 min</span></div>
+     <h3>Boxe</h3>
      <p class="goal"><b>Objetivo:</b> condicionamento físico e definição muscular.</p>
      <ul><li>Melhora a resistência e a agilidade</li><li>Tonifica braços, ombros e abdômen</li><li>Descarrega a tensão do dia</li></ul>
     </article>
     <article class="mod">
-     <div class="mod-top"><h3>Muay Thai</h3><span class="dur">60 min</span></div>
+     <div class="mod-top"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></span><span class="dur">60 min</span></div>
+     <h3>Muay Thai</h3>
      <p class="goal"><b>Objetivo:</b> força, potência e autodefesa.</p>
      <ul><li>Fortalece pernas e core</li><li>Aumenta o gasto calórico</li><li>Desenvolve disciplina e confiança</li></ul>
     </article>
     <article class="mod">
-     <div class="mod-top"><h3>Yoga</h3><span class="dur">60 min</span></div>
+     <div class="mod-top"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 8v5M6 20c2-4 4-5 6-5s4 1 6 5M5 12c3 0 5 1 7 1s4-1 7-1"/></svg></span><span class="dur">60 min</span></div>
+     <h3>Yoga</h3>
      <p class="goal"><b>Objetivo:</b> flexibilidade, equilíbrio e relaxamento.</p>
      <ul><li>Aumenta a flexibilidade e a mobilidade</li><li>Melhora a postura e a respiração</li><li>Reduz o estresse e melhora o sono</li></ul>
     </article>
    </div>
-   <p class="note">Horários das turmas na recepção ou pelo chat.</p>
+   <p class="note">Horários das turmas na recepção ou pelo <button type="button" class="linklike" data-ask="Qual o horário das aulas?">chat</button>.</p>
   </div>
  </section>
 
  <section class="diff" id="diferenciais">
-  <div class="wrap">
+  <div class="wrap reveal">
+   <p class="kicker">04 · Diferenciais</p>
    <h2>Por que a RGC</h2>
    <p class="lead">O que você encontra aqui e dificilmente encontra em outra academia.</p>
    <div class="diffs">
-    <div><h3>Personal trainer</h3><p>Acompanhamento individual com personal trainers credenciados. O valor é combinado direto com o profissional.</p></div>
-    <div><h3>Aulas para todo nível</h3><p>Da bike ao muay thai, do yoga ao RGC Kids, com turmas pequenas e horários ao longo do dia.</p></div>
-    <div><h3>Equipamentos novos</h3><p>Máquinas renovadas e manutenção semanal, sem fila nos horários de pico.</p></div>
-    <div><h3>Atendimento 24h no chat</h3><p>Dúvidas sobre horários, planos e cancelamento respondidas na hora pelo nosso assistente.</p></div>
+    <div><span class="num">01</span><h3>Personal trainer</h3><p>Acompanhamento individual com personal trainers credenciados. O valor é combinado direto com o profissional.</p></div>
+    <div><span class="num">02</span><h3>Aulas para todo nível</h3><p>Da bike ao muay thai, do yoga ao RGC Kids, com turmas pequenas e horários ao longo do dia.</p></div>
+    <div><span class="num">03</span><h3>Equipamentos novos</h3><p>Máquinas renovadas e manutenção semanal, sem fila nos horários de pico.</p></div>
+    <div><span class="num">04</span><h3>Atendimento 24h no chat</h3><p>Dúvidas sobre horários, planos e cancelamento respondidas na hora pelo nosso assistente.</p></div>
    </div>
   </div>
  </section>
 
  <section id="contato">
-  <div class="wrap contact">
+  <div class="wrap contact reveal">
    <div>
+    <p class="kicker">05 · Contato</p>
     <h2>Fale conosco</h2>
     <p class="lead">Passe na recepção ou chame no chat. Respondemos rápido.</p>
     <dl>
      <div><dt>Endereço</dt><dd>Av. Pedra Branca, 25 - Cidade Universitária<br>Palhoça - SC, 88137-270</dd></div>
-     <div><dt>Telefone / WhatsApp</dt><dd>(48) 4002-8922</dd></div>
-     <div><dt>E-mail</dt><dd>contato@rgctraining.com</dd></div>
+     <div><dt>Telefone / WhatsApp</dt><dd><a data-contact="phone" href="#">(48) 4002-8922</a></dd></div>
+     <div><dt>E-mail</dt><dd><a data-contact="email" href="#">contato@rgctraining.com</a></dd></div>
     </dl>
+    <div class="cta">
+     <a class="btn main" data-contact="whatsapp" href="#">WhatsApp</a>
+     <a class="btn ghost" data-contact="call" href="#">Ligar</a>
+    </div>
    </div>
    <iframe class="map" title="Mapa da Academia RGC Training" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3535.0142270348515!2d-48.68415457453569!3d-27.62407602623037!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9527357862dd53f3%3A0x9e3964377eda962f!2sUniSul%20Pedra%20Branca!5e0!3m2!1spt-BR!2sbr!4v1791201293022!5m2!1spt-BR!2sbr" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
  </section>
 </main>
 
-<footer><div class="wrap">© 2026 Academia RGC Training. Projeto acadêmico(A3 – Inteligência Artificial).</div></footer>
+<footer><div class="wrap">© <span id="year">2026</span> Academia RGC Training. Projeto acadêmico (A3 – Inteligência Artificial).</div></footer>
 
 <!-- ---------- Chatbot ---------- -->
-<button id="fab" aria-controls="chat" aria-expanded="false">
+<button id="fab" type="button" aria-controls="chat" aria-expanded="false">
  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L3 20l1-4.9A8 8 0 1 1 21 12z"/></svg>
  <span>Fale com a gente</span>
 </button>
 
 <div id="chat" role="dialog" aria-label="Chat de atendimento">
  <div class="ch-head">
-  <div><b>Assistente RGC</b><small>Respostas automáticas</small></div>
-  <button id="close" aria-label="Fechar chat">×</button>
+  <span class="avatar" aria-hidden="true">R</span>
+  <div class="ch-title"><b>Assistente RGC</b><small id="ch-status" class="ch-status on">Online</small></div>
+  <button id="new" type="button" aria-label="Nova conversa" title="Nova conversa">
+   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+  </button>
+  <button id="close" type="button" aria-label="Fechar chat">×</button>
  </div>
+ <p id="ch-banner" class="ch-banner" hidden>O atendimento automático está fora do ar. Fale com a equipe pelo telefone ou WhatsApp.</p>
  <div id="msgs" aria-live="polite"></div>
  <form class="ch-form" id="form">
-  <input id="in" type="text" placeholder="Digite sua dúvida…" autocomplete="off" maxlength="300" aria-label="Mensagem">
+  <div class="field">
+   <input id="in" type="text" placeholder="Digite sua dúvida…" autocomplete="off" maxlength="300" aria-label="Mensagem">
+   <span id="count" class="count" aria-hidden="true"></span>
+  </div>
   <button id="send" type="submit">Enviar</button>
  </form>
 </div>
@@ -158,5 +205,6 @@
 <script src="js/config.js"></script>
 <script src="js/schedule.js"></script>
 <script src="js/chat.js"></script>
+<script src="js/ui.js"></script>
 </body>
 </html>

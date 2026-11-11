@@ -4,49 +4,41 @@ HTML, CSS e JavaScript puro (sem build, sem dependências).
 
 ## Estrutura
 ```
-static/                  <- copiar para src/main/resources/static/
+static/                  <- vai para src/main/resources/static/ do backend
 ├── index.html
 ├── css/styles.css
 └── js/
-    ├── config.js        <- ÚNICO arquivo que você edita para conectar
-    ├── schedule.js      <- status aberto/fechado + horário do dia
-    └── chat.js          <- chatbot (chamada à API, erros, modo demo)
-backend/WebConfig.java   <- CORS (só se o front rodar fora do Spring)
+    ├── config.js        <- ÚNICO arquivo que você edita (API, contato, horários)
+    ├── schedule.js      <- cartões de horário + "aberto agora" (lê o config)
+    ├── chat.js          <- chatbot: API, erros, retry, histórico, links, saúde
+    └── ui.js            <- menu mobile, revelar ao rolar, botões "perguntar ao chat"
 ```
+O `favicon.svg` já existe no backend (`src/main/resources/static/favicon.svg`) e o `index.html` aponta para ele.
 
-## Compatibilidade com o backend (api_academia_rgc_chatbot)
-Conferido contra `ChatController`, `ChatRequest` e `ChatResponse`: o contrato do `POST /api/chat` bate com o `chat.js`. O backend não tem CORS nem Spring Security, e `src/main/resources/static` não existe ainda, então a opção A abaixo funciona sem mudar código Java.
+## Como colocar no backend (api_academia_rgc_chatbot)
+1. Substitua `src/main/resources/static/index.html` pelo `static/index.html` daqui.
+2. Copie as pastas `css/` e `js/` para `src/main/resources/static/`. Mantenha o `favicon.svg`.
+3. Suba a aplicação e abra `http://localhost:8080/`. Mesma origem: não precisa de CORS.
+4. O deploy atual (push na `main` → Actions → imagem → rollout) já leva o front junto, porque o `Dockerfile` empacota `src/`.
 
-## Como rodar
-**A) Pelo Spring Boot (recomendado):** crie `src/main/resources/static/` no projeto da API, copie o conteúdo de `static/` para `src/main/resources/static/`, suba a aplicação e abra `http://localhost:8080/`. Não precisa de CORS.
-
-**B) Front separado (VS Code Live Server, porta 5500):**
-1. Em `config.js`, defina `API_BASE_URL: 'http://localhost:8080'`.
-2. Copie `backend/WebConfig.java` para `com.rgctraining.chatbot.config` e ajuste as origens se necessário.
-3. Não abra o `index.html` com duplo clique (`file://`): o navegador bloqueia a chamada. Use o Live Server.
-
-**C) Sem backend (demonstração):** abra `index.html?mock=1`. Responde no navegador com palavras-chave.
+## Front separado (Live Server)
+Em `config.js`, `API_BASE_URL: 'http://localhost:8080'`, e o backend precisa de CORS para a origem do Live Server (modelo em `backend/WebConfig.java`, que cobre só `/api/**`). A checagem de saúde do chat só roda com `API_BASE_URL: ''`. Não abra o arquivo com duplo clique (`file://`).
 
 ## Contrato da API
-`POST /api/chat`
-```json
-{ "sessionId": "web-...", "mensagem": "qual o horario" }
-```
-```json
-{ "resposta": "...", "intentDetectado": "horario_funcionamento", "score": 0.83, "fallback": false }
-```
-Atrás da VPN: o backend e o Postgres precisam estar acessíveis (ZeroTier ativo) para o chat responder.
+`POST /api/chat` com `{ "sessionId": "web-...", "mensagem": "..." }` e resposta `{ "resposta": "...", "intentDetectado": "...|null", "score": 0.83, "fallback": false }`.
+Ao abrir o chat, o front consulta `GET /actuator/health` (exposto pelo backend) e avisa o visitante se o atendimento automático estiver fora do ar.
+
+## O que o chat faz
+- Mostra erro claro (rede, timeout, 4xx, 5xx, resposta inválida) e oferece "Tentar novamente" sem duplicar a mensagem.
+- Em `fallback` ou intenção `atendimento_humano`, mostra botões de WhatsApp e ligar (dados do `config.js`).
+- Transforma telefone, e-mail e URL das respostas em links (sem `innerHTML`).
+- Guarda a conversa na aba (`sessionStorage`) e tem botão de nova conversa (gera novo `sessionId`).
+- Os botões "Quero este plano" abrem o chat já perguntando.
 
 ## Depuração
-- `index.html?debug=1` mostra intenção e score abaixo de cada resposta (útil para calibrar o limiar).
-- Erros de rede aparecem no console (`[chat] falha ao chamar ...`).
-- Teste o backend direto: `curl -X POST localhost:8080/api/chat -H "Content-Type: application/json" -d '{"sessionId":"t","mensagem":"horario"}'`
+- `?debug=1` mostra intenção e score abaixo de cada resposta.
+- `?mock=1` responde no navegador, sem backend.
+- Teste direto: `curl -X POST localhost:8080/api/chat -H "Content-Type: application/json" -d '{"sessionId":"t","mensagem":"horario"}'`
 
-## Deploy
-O `Dockerfile` do backend empacota `src/` no jar, então o frontend em `static/` vai junto no deploy atual (push na `main` → GitHub Actions → imagem → `kubectl rollout`). Não precisa de servidor separado.
-
-## Atenção: endpoints abertos
-`/api/chat/feedback` e `/api/chat/recarregar-modelo` não têm autenticação. O frontend não os usa, mas, com o site público, qualquer visitante poderia chamá-los e inserir frases erradas no treino. Vale protegê-los antes de publicar.
-
-## Manter sincronizado com o banco
-Horários, preços e aulas do site são texto fixo no HTML. Os horários já seguem o `sql/banco.sql`. A lista de modalidades do site (Bike, FitDance, Kids, Boxe, Muay Thai, Yoga) ainda difere da resposta `aulas_modalidades` do banco (musculação, spinning, funcional, yoga, jiu-jitsu). Se mudar em `bot_responses`, mude aqui também, e vice-versa. Horários também estão em `schedule.js` (objeto `SCHEDULE`).
+## Atenção: conteúdo do site x banco
+O site e o banco (`sql/banco.sql`) hoje se contradizem, e o chatbot responde com o texto do banco. Veja a tabela de divergências entregue junto com este pacote. Horários, contato e modalidades do site vêm de `config.js` e do `index.html`; as respostas do bot vêm de `bot_responses`. Mudou um, mude o outro.
